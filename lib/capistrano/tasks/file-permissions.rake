@@ -6,7 +6,7 @@ end
 def absolute_writable_paths
   linked_dirs = fetch(:linked_dirs)
   fetch(:file_permissions_paths).map do |d|
-    linked_dirs.include?(d) ? shared_path.join(d) : release_path.join(d)
+    Array(linked_dirs).include?(d) ? shared_path.join(d) : release_path.join(d)
   end
 end
 
