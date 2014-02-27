@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['peterjmit@gmail.com']
   spec.description   = %q{File permissions management for Capistrano 3.x}
   spec.summary       = %q{File permissions management for Capistrano 3.x}
-  spec.homepage      = 'https://github.com/peterjmit/capistrano-file-permissions'
+  spec.homepage      = 'https://github.com/capistrano/file-permissions'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split($/)
