@@ -42,8 +42,8 @@ namespace :deploy do
 
         entries = entries.join(',')
 
-        execute :setfacl, "-Rm", entries, *paths
-        execute :setfacl, "-Rdm", entries, *paths
+        execute :setfacl, "-Rnm", entries, *paths
+        execute :setfacl, "-Rndm", entries, *paths
       end
     end
 
