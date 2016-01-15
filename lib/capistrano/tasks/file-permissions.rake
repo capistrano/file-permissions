@@ -10,7 +10,7 @@ def absolute_writable_paths
   end
 end
 
-def acl_entries(items, type = 'u', permissions = 'rwx')
+def acl_entries(items, type = 'u', permissions = 'rwX')
   items.map { |item| "#{type}:#{item}:#{permissions}" }
 end
 
