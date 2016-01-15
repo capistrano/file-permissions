@@ -55,6 +55,22 @@ namespace :deploy do
       end
     end
 
+    desc "Recursively change user ownership for configured paths, and make them user writable"
+    task :chown => [:check] do
+      next unless any? :file_permissions_paths
+      next unless any? :file_permissions_users
+
+      users = fetch(:file_permissions_users)
+      if users.length > 1
+        warn "More than one user configured, using the first user only"
+      end
+
+      on roles fetch(:file_permissions_roles) do |host|
+        paths = absolute_writable_paths
+        execute :sudo, :chown, "-R", users.first, *paths
+      end
+    end
+
     desc "Recursively change group ownership for configured paths, and make them group writable"
     task :chgrp => [:check] do
       next unless any? :file_permissions_paths
