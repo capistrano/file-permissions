@@ -40,10 +40,10 @@ namespace :deploy do
           entries.push(*acl_entries(fetch(:file_permissions_groups), 'g'))
         end
 
-        entries = entries.join(',')
+        entries = entries.map { |e| "-m #{e}" }.join(' ')
 
-        execute :setfacl, "-Rnm", entries, *paths
-        execute :setfacl, "-Rndm", entries, *paths
+        execute :setfacl, "-Rn", entries, *paths
+        execute :setfacl, "-dRn", entries, *paths.map
       end
     end
 
