@@ -34,7 +34,7 @@ set :file_permissions_paths, ["app/logs", "app/cache"]
 ```
 
 This will grant access to the deploy user. Optionally, you can add other users or groups:
-```
+```ruby
 set :file_permissions_users, ["www-data"]
 set :file_permissions_groups, ["www-data"]
 ```
@@ -50,7 +50,7 @@ before "deploy:updated", "deploy:set_permissions:acl"
 Assuming `app/logs` is a shared directory, and `app/cache` is part of the normal
 release, this gem would execute the following:
 
-```ruby
+```
 [..] 
 setfacl -R -m u:<deploy-user>:rwX <path-to-app>/shared/app/logs
 setfacl -dR -m u:<deploy-user>:rwX <path-to-app>/shared/app/logs
