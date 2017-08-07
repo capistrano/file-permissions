@@ -10,8 +10,8 @@ def absolute_writable_paths
   end
 end
 
-def acl_entries(items, type = 'u', permissions = 'rwX')
-  items.map { |item| "#{type}:#{item}:#{permissions}" }
+def acl_entries(items, type = 'u', permissions = 'rwx')
+  items.map { |item| [item, "#{type}:#{item}:#{permissions}"] }.to_h
 end
 
 namespace :deploy do
@@ -37,13 +37,24 @@ namespace :deploy do
         paths = absolute_writable_paths
 
         if any? :file_permissions_groups
-          entries.push(*acl_entries(fetch(:file_permissions_groups), 'g'))
+          groups = fetch(:file_permissions_groups);
+          entries = entries.merge(acl_entries(groups, 'g'));
         end
 
-        entries = entries.map { |e| "-m #{e}" }.join(' ')
-
-        execute :setfacl, "-R", entries, *paths
-        execute :setfacl, "-dR", entries, *paths.map
+        paths.each do |path|
+          entries.each do |user, entry|
+            #checks if path already has ACL set, to determine if the -n option should be used or not
+            has_facl = (capture "getfacl --absolute-names --tabular #{path} | grep #{user}.*rwx | wc -l").chomp != "0"
+            
+            if (has_facl)
+              execute :setfacl, "-Rn", "-m #{entry}", path
+              execute :setfacl, "-dRn", "-m #{entry}", path
+            else
+              execute :setfacl, "-R", "-m #{entry}", path
+              execute :setfacl, "-dR", "-m #{entry}", path
+            end
+          end
+        end
       end
     end
 
