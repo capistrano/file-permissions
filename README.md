@@ -41,6 +41,8 @@ set :file_permissions_groups, ["www-data"]
 
 ### Acl
 
+*ACL must be enabled on your server for this to work (you should be able to run the **setfacl** command)*
+
 Add the acl task to the deployment flow
 
 ```ruby
@@ -61,7 +63,7 @@ setfacl -dR -m u:<deploy-user>:rwX <path-to-app>/<release>/app/cache
 
 (The -d option makes the ACL entry a default for any other file generated in the directory.)
 
-Note: if ACL is already defined for the directory, the -n option will be added, as it avoids problems when setting ACL to new files generated in a directory which already had a default ACL.
+*Note: if ACL is already defined for the directory, the **-n option** will be added, as it avoids problems when setting ACL to new files generated in a directory which already had a default ACL.*
 
 ### Other tasks
 * deploy:set_permissions:chmod
