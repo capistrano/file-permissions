@@ -50,7 +50,7 @@ before "deploy:updated", "deploy:set_permissions:acl"
 Assuming `app/logs` is a shared directory, and `app/cache` is part of the normal
 release, this gem would execute the following:
 
-```
+```ruby
 [..] 
 setfacl -R -m u:<deploy-user>:rwX <path-to-app>/shared/app/logs
 setfacl -dR -m u:<deploy-user>:rwX <path-to-app>/shared/app/logs
@@ -67,7 +67,6 @@ Note: if ACL is already defined for the directory, the -n option will be added, 
 * deploy:set_permissions:chmod
 * deploy:set_permissions:chgrp
 * deploy:set_permissions:chown
-* 
 ### Configuration
 
 The gem makes the following configuration variables available (shown with defaults)
