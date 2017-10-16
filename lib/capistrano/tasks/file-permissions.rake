@@ -10,7 +10,7 @@ def absolute_writable_paths
   end
 end
 
-def acl_entries(items, type = 'u', permissions = 'rwX')
+def acl_entries(items, type = 'u', permissions = fetch(:file_permissions_default_permissions))
   items.map { |item| "#{type}:#{item}:#{permissions}" }
 end
 
@@ -42,8 +42,8 @@ namespace :deploy do
 
         entries = entries.map { |e| "-m #{e}" }.join(' ')
 
-        execute :setfacl, "-R", entries, *paths
-        execute :setfacl, "-dR", entries, *paths.map
+        execute :setfacl, fetch(:file_permissions_setfacl_first), entries, *paths
+        execute :setfacl, fetch(:file_permissions_setfacl_second), entries, *paths.map
       end
     end
 
@@ -98,5 +98,8 @@ namespace :load do
     set :file_permissions_users, []
     set :file_permissions_groups, []
     set :file_permissions_chmod_mode, "0777"
+    set :file_permissions_setfacl_first, "-Rn"
+    set :file_permissions_setfacl_second, "-dRn"
+    set :file_permissions_default_permissions, "rwX"
   end
 end
