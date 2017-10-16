@@ -47,7 +47,7 @@ Assume `app/logs` is a shared directory, and `app/cache` is part of the normal
 release, this gem would execute the following:
 
 ```
-[..] setfacl -Rn -m u:www-data:rwX -m u:<deploy-user>:rwX <path-to-app>/shared/app/logs <path-to-app>/<release>/app/cache
+[..] setfacl -R -m u:www-data:rwX -m u:<deploy-user>:rwX <path-to-app>/shared/app/logs <path-to-app>/<release>/app/cache
 ```
 
 ### Other tasks
@@ -65,6 +65,9 @@ set :file_permissions_paths, []
 set :file_permissions_users, []
 set :file_permissions_groups, []
 set :file_permissions_chmod_mode, "0777"
+set :file_permissions_setfacl_first, "-R"
+set :file_permissions_setfacl_second, "-dR"
+set :file_permissions_default_permissions, "rwX"
 ```
 
 ## Contributing
