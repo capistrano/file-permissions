@@ -42,8 +42,8 @@ namespace :deploy do
 
         entries = entries.map { |e| "-m #{e}" }.join(' ')
 
-        execute :setfacl, "-R", entries, *paths
-        execute :setfacl, "-dR", entries, *paths.map
+        execute :sudo, :setfacl, "-R", entries, *paths
+        execute :sudo, :setfacl, "-dR", entries, *paths.map
       end
     end
 
