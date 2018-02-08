@@ -50,6 +50,11 @@ release, this gem would execute the following:
 [..] setfacl -Rn -m u:www-data:rwX -m u:<deploy-user>:rwX <path-to-app>/shared/app/logs <path-to-app>/<release>/app/cache
 ```
 
+Additionally, if you were interested in modifying the `other` ACL, setting `file_permissions_modify_other` to `true` would do the following:
+```
+[..] setfacl -Rn -m u:www-data:rwX -m u:<deploy-user>:rwX -m o::rwX <path-to-app>/shared/app/logs <path-to-app>/<release>/app/cache
+```
+
 ### Other tasks
 * deploy:set_permissions:chmod
 * deploy:set_permissions:chgrp
