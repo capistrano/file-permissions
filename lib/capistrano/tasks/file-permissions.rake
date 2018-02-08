@@ -40,6 +40,10 @@ namespace :deploy do
           entries.push(*acl_entries(fetch(:file_permissions_groups), 'g'))
         end
 
+        if fetch(:file_permissions_modify_other)
+          entries.push(*acl_entries([''], 'o'))
+        end
+
         entries = entries.map { |e| "-m #{e}" }.join(' ')
 
         execute :setfacl, "-R", entries, *paths
@@ -94,6 +98,7 @@ end
 namespace :load do
   task :defaults do
     set :file_permissions_roles, :all
+    set :file_permissions_modify_other, false
     set :file_permissions_paths, []
     set :file_permissions_users, []
     set :file_permissions_groups, []
