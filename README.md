@@ -61,6 +61,7 @@ The gem makes the following configuration variables available (shown with defaul
 
 ```ruby
 set :file_permissions_roles, :all
+set :file_permissions_modify_other, false
 set :file_permissions_paths, []
 set :file_permissions_users, []
 set :file_permissions_groups, []
