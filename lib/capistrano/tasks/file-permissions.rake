@@ -51,7 +51,7 @@ namespace :deploy do
     task :chmod => [:check] do
       next unless any? :file_permissions_paths
       on roles fetch(:file_permissions_roles) do |host|
-        execute :chmod, "-R", fetch(:file_permissions_chmod_mode), *absolute_writable_paths
+        execute sudo:, :chmod, "-R", fetch(:file_permissions_chmod_mode), *absolute_writable_paths
       end
     end
 
@@ -84,8 +84,8 @@ namespace :deploy do
       on roles fetch(:file_permissions_roles) do |host|
         paths = absolute_writable_paths
         execute :sudo, :chgrp, "-R", groups.first, *paths
-        # make sure all child directories inherit group writable
-        execute :sudo, :chmod, "-R", "g+rws", *paths
+	# ensure full perms to group 
+        execute :sudo, :chmod, "-R", "g+rwx", *paths
       end
     end
   end
