@@ -85,7 +85,7 @@ namespace :deploy do
         paths = absolute_writable_paths
         execute :sudo, :chgrp, "-R", groups.first, *paths
         # make sure all child directories inherit group writable
-        execute :sudo, :chmod, "-R", "g+rws", *paths
+        execute :sudo, :chmod, "-R", "g+rwsx", *paths
       end
     end
   end
