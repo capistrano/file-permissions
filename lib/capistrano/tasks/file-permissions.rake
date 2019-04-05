@@ -51,7 +51,7 @@ namespace :deploy do
     task :chmod => [:check] do
       next unless any? :file_permissions_paths
       on roles fetch(:file_permissions_roles) do |host|
-        execute sudo:, :chmod, "-R", fetch(:file_permissions_chmod_mode), *absolute_writable_paths
+        execute :chmod, "-R", fetch(:file_permissions_chmod_mode), *absolute_writable_paths
       end
     end
 
